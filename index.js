@@ -135,7 +135,6 @@ function executeFork(fileName, args, path) {
 
 
 // access	Used to check whether the calling program has access to a specified file. It can be used to check whether a file exists or not
-
 // accton	Used to turn on or turn off the process for accounting or change info process accounting file
 // aclocal	Used to automatically generate aclocal.m4 files from configure.in file
 // acpi	Used to display the battery status and other ACPI information
