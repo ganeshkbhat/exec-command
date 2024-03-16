@@ -139,7 +139,7 @@ function executeFork(fileName, args, options) {
   });
 }
 
-[
+let commands = [
   "access", "accton", "aclocal", "acpi", "acpi_available",
   "acpid", "addr2line", "agetty", "alias", "amixer", "aplay",
   "aplaymidi", "apropos", "apt", "apt-get", "aptitude", "ar",
@@ -162,23 +162,23 @@ function executeFork(fileName, args, options) {
   "fg", "fgrep", "file", "find", "finger", "fmt", "fold", "for",
   "free", "Fun", "function", "g++", "gawk", "gcc", "gdb", "getent",
   "gpasswd", "grep", "groupadd", "groupdel", "groupmod", "groups",
-  "grpconv", "gs", "tar", "xz", "gz", "gunzip", "gzexe", "gzip", 
-  "halt", "hash", "hdparm", "help", "hexdump", "history", 
-  "host", "hostid", "hostname", "hostnamectl", "htop", 
-  "hwclock", "iconv", "id", "if", "iftop", "ifup", 
-  "import", "info", "insmod", "install", "iostat", "iotop", "ip", 
-  "ipcrm", "ipcs", "iptables", "iptables-save", "iwconfig", 
-  "join", "journalctl", "kill", "last", "less", "let", "ln", "locate", 
+  "grpconv", "gs", "tar", "xz", "gz", "gunzip", "gzexe", "gzip",
+  "halt", "hash", "hdparm", "help", "hexdump", "history",
+  "host", "hostid", "hostname", "hostnamectl", "htop",
+  "hwclock", "iconv", "id", "if", "iftop", "ifup",
+  "import", "info", "insmod", "install", "iostat", "iotop", "ip",
+  "ipcrm", "ipcs", "iptables", "iptables-save", "iwconfig",
+  "join", "journalctl", "kill", "last", "less", "let", "ln", "locate",
   "look", "lsblk", "lshw", "lsmod", "lsof", "lsusb", "mailq", "man",
   "md5sum", "mkdir", "modinfo", "more", "mount", "mpstat", "mv", "nc",
   "netstat", "nmcli", "nslookup", "od", "passwd", "paste", "pidof",
   "ping", "pinky", "pmap", "poweroff", "printf", "ps", "pwd", "ranlib",
-  "rcp", "read", "read", "readelf", "readlink", "reboot", "rename",
+  "rcp", "read", "readelf", "readlink", "reboot", "rename",
   "reset", "restore", "return", "rev", "rm", "rmdir", "rmmod",
   "route", "rsync", "sar", "scp", "screen", "script", "scriptreplay",
   "sdiff", "sed", "select", "seq", "setsid", "shift", "showkey",
   "shred", "shutdown", "sleep", "source", "sort", "split", "ssh",
-  "strace", "stty", "sudo", "sum", "sync", "systemctl", "tac",
+  "strace", "stty", "su", "sudo", "sum", "sync", "systemctl", "tac",
   "tail", "tee", "time", "top", "touch", "tr", "tracepath",
   "traceroute", "tree", "tty", "type", "uname", "unexpand", "uniq",
   "unix2dos", "until", "uptime", "useradd", "usermod", "username",
@@ -186,449 +186,33 @@ function executeFork(fileName, args, options) {
   "wc", "wget", "whatis", "which", "while", "who", "whoami", "write",
   "xargs", "xdg-open", "yes", "zdiff", "zdump", "zgrep", "zip", "ls",
   "find", "kill", "ifconfig", "curl", "diff",
-  "head", "tail", "sort", "sed", "cut", "echo", "tr", "export", "set",
-  "source", "apropos", "info", "alias", "df", "du", 
-  "cat", "ln", "whereis", "su", "hd", "at", "apt-get", "yumrm", "yum",
-  "cc", "make", "nohup", "jobs", "wait", "atop", "pgrep", 
-  "/etc/inittab", "init"
+  "head", "tail", "set", "apropos", "cat", "whereis", "hd", "at",
+  "apt-get", "yumrm", "yum", "cc", "make", "nohup",
+  "jobs", "wait", "atop", "pgrep", "/etc/inittab", "init"
 ]
 
+let pt = process.cwd();
 
-// tar Command to Compress Files in Linux
-// Zip Command to Compress Files in Linux
-// Gzip Command to Compress Files in Linux
-// Bzip2 Command to Compress Files in Linux
-// XZ Command to Compress Files in Linux
-// gz
-// ps Command to List Running Processes in Linux
-// top Command to List Running Processes in Linux
-// htop Command to List Running Processes in Linux
-// atop Command to List Running Processes in Linux
-// pgrep Command to Find Process IDs in Linux
-// chmod https://www.geeksforgeeks.org/chmod-command-linux/?ref=lbp
-// chmod change ownership https://www.geeksforgeeks.org/chown-command-in-linux-with-examples/?ref=lbp
-// chgrp change group ownership https://www.geeksforgeeks.org/chgrp-command-in-linux-with-examples/?ref=lbp
-// /etc/inittab Specifies the init command control file.
-// init [OPTIONS...] {COMMAND}
-// ls
-// find
-// kill
-// ifconfig
-// ping
-// ssh
-// scp
-// wget
-// curl
-// diff
-// head
-// tail
-// SORT
-// sed
-// cut
-// echo
-// tr
-// export
-// set
-// source
-// history
-// apropos
-// info
-// alias
-// uname
-// df
-// du
-// cat
-// ln
-// which
-// whereis
-// locate
-// date
-// cal
-// systemctl
-// shutdown
-// useradd
-// usermod
-// userdel
-// groupadd
-// groupmod
-// groupdel
-// passwd
-// pwd
-// mkdir
-// su
-// sudo
-// chroot
-// file
-// hd
-// wc
-// tee
-// script
-// ssh
-// crontab
-// at
-// apt-get
-// yumrm
-// cp
-// mv
-// touch
-// cat
-// cc
-// ccrypt
-// mkdir
-// rm
-// cp
-// bind
-// atrm
-// uname
-// df
-// du
-// screen
-// rsync
-// uniq
-// arch
-// arp
-// aspell
-// atd
-// atrm
-// atq
-// autoconf
-// autoheader
-// automake
-// make
-// basename
-// batch
-// bc
-// bg
-// biff
-// bind
-// bison
-// break
-// builtin
-// bzcmp
-// bzdiff
-// bzgrep
-// bzip2
-// banner
-// nohup
-// bg
-// fg
-// jobs
-// wait
-// rsync
-// screen
-// uniq
+// let fileName = "ls", args = ["-a"], options = {};
+// let ls = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`)
+// let sl = ((fileName, args, options) => {
+//   ls(fileName, args, options, spawnSync)
+// })
+// sl(fileName, args, options)
+// console.log(ls(fileName, args, options, spawnSync).stdout.toString());
+
+function generateCommandFunctions(commands) {
+  let l = commands.length;
+  let cmds = {};
+  for (let i = 0; i < l; i++) {
+    let fileName = commands[i], options = {};
+    let cmd = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`);
+    cmds[fileName] = ((args, options) => cmd(fileName, args || [], options || { cwd: process.cwd() }, spawnSync))
+  }
+  return cmds;
+}
 
 
-
-
-// access	Used to check whether the calling program has access to a specified file. It can be used to check whether a file exists or not
-// accton	Used to turn on or turn off the process for accounting or change info process accounting file
-// aclocal	Used to automatically generate aclocal.m4 files from configure.in file
-// acpi	Used to display the battery status and other ACPI information
-// acpi_available	Tests whether ACPI (Advanced Configuration and Power Interface) subsystem is available or not
-// acpid	It provides intelligent power management on a system and is used to notify the user-space programs about the ACPI events
-// addr2line	Used to convert addresses into file names and line numbers
-// agetty	It is a Linux version of getty, which is a Unix program running on a host computer that manages physical or virtual terminals to allow multi-user access
-// alias	Instructs the shell to replace one string with another string while executing the commands
-// amixer	It is a command-line mixer for ALSA(Advanced Linux Sound Architecture) sound-card driver
-// aplay	It is a command-line audio player for ALSA(Advanced Linux Sound Architecture) sound card drivers.
-// aplaymidi	Used to play standard MIDI(Musical Instrument Digital Interface) files, by sending the content of a MIDI file to an ALSA(Advanced Linux Sound Architecture) MIDI port
-// apropos	It helps the user when they don’t remember the exact command but knows a few keywords related to the command that define its uses or functionality
-// apt	Provides a high-level CLI (Command Line Interface) for the package management system and is intended as an interface for the end user which enables some options better suited for interactive usage by default compared to more specialized APT tools like apt-cache and apt-get
-// apt-get	It is a command-line tool which helps in handling packages in Linux
-// aptitude	Opens up a highly built-in interface to interact with the package manager of the machine
-// ar	Used to create, modify and extract the files from the archives
-// arch	Used to print the computer architecture
-// arp	It manipulates the System’s ARP cache. It also allows a complete dump of the ARP cache
-// aspell	Used as a spell checker in Linux
-// atd	It is a job scheduler daemon that runs jobs scheduled for later execution
-// atrm	Used to remove the specified jobs. To remove a job, its job number is passed in the command
-// atq	It displays the list of pending jobs which are scheduled by the user
-// autoconf	Used in Linux to generate configuration scripts
-// autoheader	Used to create a template file of C “#define” or any other template header for configure to use
-// automake	Used for automatically generating Makefile.in files compliant with the set GNU Coding Standards
-// autoreconf	Used to create automatically buildable source code for Unix-like systems
-// autoupdate	Used to update configure.in file in our Linux system to a newer Autoconf.
-// awk	It is a scripting language used for manipulating data and generating reports
-// banner	Used to print the ASCII character string in large letter to standard output
-// basename	It strips directory information and suffixes from file names i.e. it prints the file name NAME with any leading directory components removed
-// batch	Used to read commands from standard input or a specified file and execute them when system load levels permit i.e. when the load average drops below 1.5
-// bc	Used for command line calculator
-// bg	Used to place foreground jobs in background
-// biff	A mail notification system for unix that notifies the user at the command line when new mail arrives and tells from whom it is
-// bind	Used to set Readline key bindings and variables
-// bison	It is basically a parser generator similar to yacc
-// break	Used to terminate the execution of for loop, while loop and until loop
-// builtin	Used to run a shell builtin, passing it arguments(args), and also to get the exit status
-// bzcmp	Used to invoke the cmp utility on bzip2 compressed files
-// bzdiff	Used to compare the bzip2 compressed files
-// bzgrep	Used to search for a pattern or an expression but inside a bzip2-compressed file
-// bzip2	Used to compress and decompress the files
-// bzless	It does not have to read the entire input file before starting, so with a large file, it starts up faster
-// bzmore	Used as a filter for CRT viewing of bzip2 compressed files, which are saved with .bz2 suffix
-// cal	Used to see the calendar of a specific month or a whole year. By default, it shows current month’s calendar as output
-// case	It is the best alternative when we had to use multiple if/elif on a single variable
-// cat	Reads data from file and gives their content as output. It helps us to create, view, concatenate files
-// cc	It is used to compile the C language codes and create executables
-// ccrypt	It is a command line tool for encryption and decryption of data
-// cd	Known as change directory command. It is used to change current working directory
-// cfdisk	It displays or manipulates the disk partition table by providing a text-based “graphical” interface
-// chage	Used to view and change the user password expiry information
-// chattr	It is a file system command which is used for changing the attributes of a file in a directory
-// chfn	It allows you to change a user’s name and other details easily. chfn stands for Change finger
-// chgrp	Used to change the group ownership of a file or directory
-// chkconfig	Used to list all available services and view or update their run level settings
-// chmod	Used to change the access mode of a file
-// chown	Used to change the file Owner or group
-// chpasswd	Used to change password for multiple users at a time
-// chroot	Used to change the root directory
-// chrt	Used for manipulating the real-time attributes of a process
-// chsh	Used to change the user’s login shell(currently login shell)
-// chvt	Used to switch between the different TTY (TeleTYpewriter) terminals available
-// cksum	Used to display a CRC(Cyclic Redundancy Check) value, the byte size of the file and the name of the file to standard output
-// clear	Used to clear the terminal screen
-// cmp	Used to compare the two files byte by byte and helps you to find out whether the two files are identical or not
-// col	It is used to filter out reverse line feeds. The col utility simply reads from the standard input and writes to standard output
-// colcrt	Used to format the text processor output so that it can be viewed on Cathode Ray Tube displays
-// colrm	Removes selected columns from a file
-// column	Used to display the contents of a file in columns
-// comm	Compares two sorted files line by line and write to standard output; the lines that are common and the lines that are unique
-// compress	Used to reduce the file size. After compression, the file will be available with an added .Z extension
-// continue	Used to skip the current iteration in for, while and until loop
-// cp	Used to copy files or group of files or directory
-// cpio	cpio stands for “copy in, copy out“. It is used for processing the archive files like *.cpio or *.tar. This command can copy files to and from archives
-// cpp	It is automatically used by C compiler to transform your program before compilation
-// cron	A software utility, offered by Linux-like operating system which automates the scheduled task at a predetermined time
-// crontab	A list of commands that you want to run on a regular schedule, and also the name of the command used to manage that list
-// csplit	Used to split any file into many parts as required by the user
-// ctags	It allows quick access across the files (For example quickly seeing definition of a function)
-// cupsd	It is a type of scheduler for CUPS (Common Unit Printing System). It implements the printing system on the basis of the Internet Printing Protocol
-// curl	A tool to transfer data to or from a server, using any of the supported protocols
-// cut	For cutting out the sections from each line of files and writing the result to standard output
-// cvs	Used to store the history of a file. Whenever a file gets corrupted or anything goes wrong “cvs” help us to go back to the previous version and restore our file
-// date	Used to display the system date and time. It is also used to set date and time of the system
-// dc	Used to evaluate arithmetic expressions. It evaluates expressions in the form of a postfix expression
-// dd	It is a command-line utility for Unix and Unix-like operating systems whose primary purpose is to convert and copy files
-// declare	Used to declare shell variables and functions, set their attributes and display their values
-// depmod	Used to generate a list of dependency description of kernel modules and its associated map files
-// df	Used to display information related to file systems about total space and available space
-// diff	Used to display the differences in the files by comparing the files line by line
-// diff3	Used to compare the three files line by line
-// dir	Used to list the contents of a directory
-// dirname	Used to remove the trailing forward slahes “/” from the NAME and prints the remaining portion
-// dirs	Used to display the list of currently remembered directories
-// disable	Used to stop the printers or classes
-// dmesg	Used to examine the kernel ring buffer and print the message buffer of kernel
-// dmidecode	Used when the user wants to retrieve system’s hardware related information such as Processor, RAM(DIMMs), BIOS detail, etc. of Linux system in a readable format
-// domainname	Used to return the Network Information System (NIS) domain name of the host
-// dos2unix	Converts a DOS text file to UNIX format
-// dosfsck	Diagnoses MS-DOS file system for problems and attempts to repair them
-// dstat	Used to retrieve information or statistics form components of the system such as network connections, IO devices, or CPU, etc.
-// du	Used to track the files and directories which are consuming excessive amount of space on hard disk drive
-// dump	Used to backup the filesystem to some storage device
-// dumpe2fs	Used to print the super block and blocks group information for the filesystem present on device
-// dumpkeys	Used for the dump keyboard translation tables
-// echo	Used to display line of text/string that are passed as an argument
-// ed	Used for launching the ed text editor which is a line-based text editor with a minimal interface which makes it less complex for working on text files i.e creating, editing, displaying and manipulating files
-// egrep	It treats the pattern as an extended regular expression and prints out the lines that match the pattern
-// eject	It allows ejecting a removable media (typically a CD-ROM, floppy disk, tape, or JAZ or ZIP disk) using the software
-// emacs	It is a editor having simple user interface. Also, there is no insert mode in this editor. It only have editing mode.
-// enable	Used to start the printers or classes
-// env	Used to either print environment variables. It is also used to run a utility or command in a custom environment
-// eval	Built-in command used to execute arguments as a shell command
-// ex	It is a text editor in Linux which is also termed as the line editor mode of the vi editor
-// exec	Used to execute a command from the bash itself
-// exit	Used to exit the shell where it is currently running
-// expand	Allows you to convert tabs into spaces in a file and when no file is specified it reads from standard input
-// expect	This command or scripting language works with scripts that expect user inputs. It automates the task by providing inputs
-// export	It is bash shell BUILTINS commands, which means it is part of the shell. It marks an environment variables to be exported to child-processes
-// expr	It evaluates a given expression and displays its corresponding output
-// factor	Used to print the prime factors of the given numbers, either given from command line or read from standard input
-// fc	Used to list, edit or re-execute the commands previously entered into an interactive shell
-// fc-cache	It scans the font directories and build font cache for applications which use fontconfig for their font handling
-// fc-list	It is used to list the available fonts and font styles. Using the format option, the list of all fonts can be filtered and sorted out
-// fdisk	Format disk is a dialog-driven command in Linux used for creating and manipulating disk partition table
-// fg	Used to put a background job in foreground
-// fgrep	Used to search for the fixed-character strings in a file
-// file	Used to determine the type of a file. .file type may be of human-readable(e.g. ‘ASCII text’) or MIME type(e.g. ‘text/plain; charset=us-ascii’)
-// find	Used to find files and directories and perform subsequent operations on them
-// finger	It is a user information lookup command which gives details of all the users logged in.
-// fmt	Works as a formatter for simplifying and optimizing text files
-// fold	It wraps each line in an input file to fit a specified width and prints it to the standard output
-// for	Used to repeatedly execute a set of command for every element present in the list
-// free	Displays the total amount of free space available along with the amount of memory used and swap memory in the system, and also the buffers used by the kernel
-// Fun	Used to draw various type of patterns on the terminal
-// function	Used to create functions or methods
-// g++	Used for preprocessing, compilation, assembly and linking of source code to generate an executable file
-// gawk	Used for pattern scanning and processing language
-// gcc	GNU Compiler Collections is used to compile mainly C and C++ language. It can also be used to compile Objective C and Objective C++
-// gdb	GNU Debugger tool helps to debug the programs written in C, C++, Ada, Fortran, etc.
-// getent	Used to get the entries in a number of important text files called databases
-// gpasswd	Used to administer the /etc/group and /etc/gshadow
-// grep	Searches a file for a particular pattern of characters, and displays all lines that contain that pattern
-// groupadd	Used to create a new user group
-// groupdel	Used to delete a existing group
-// groupmod	Used to modify or change the existing group on Linux system
-// groups	Groups are the collection of users. Groups make it easy to manage users with the same security and access privileges
-// grpck	It verifies the integrity of the groups information. It checks that all entries in /etc/group and /etc/gshadow have the proper format and contain valid data
-// grpconv	It is used to convert to shadow groups. The grpconv command creates a gshadow from the group and an optionally existing gshadow
-// gs	This command invokes Ghostscript, which is an interpreter of Adobe Systems PostScript and Portable Document Format(PDF) languages
-// gunzip	Used to compress or expand a file or a list of files in Linux
-// gzexe	Used to compress executable files and also used to automatically uncompress and execute the files
-// gzip	This command compresses files. Each single file is compressed into a single file.
-// halt	Used to instruct the hardware to stop all the CPU functions. Basically, it reboots or stops the system.
-// hash	Used to maintain a hash table of recently executed programs
-// hdparm	Used to get statistics about the hard disk, alter writing intervals, acoustic management, and DMA settings
-// Head	Prints the top N number of data of the given input
-// help	Displays information about shell built-in commands
-// hexdump	Used to filter and display the specified files, or standard input in a human readable specified format
-// history	Used to view the previously executed command
-// host	Used for DNS (Domain Name System) lookup operations
-// hostid	Used to displays the Host’s ID in hexadecimal format
-// hostname	Used to obtain the DNS(Domain Name System) name and set the system’s hostname or NIS(Network Information System) domain name.
-// hostnamectl	Provides a proper API used to control Linux system hostname and change its related settings
-// htop	It is a command line utility that allows the user to interactively monitor the system’s vital resources or server’s processes in real time
-// hwclock	Utility for accessing the hardware clock, also called Real Time Clock (RTC)
-// iconv	Used to convert some text in one encoding into another encoding
-// id	Used to find out user and group names and numeric ID’s (UID or group ID) of the current user or any other user in the server
-// if	Used to execute commands based on conditions
-// ifconfig	Used to configure the kernel-resident network interfaces.
-// iftop	It is a network analyzing tool used by system administrators to view the bandwidth related stats
-// ifup	It basically brings the network interface up, allowing it to transmit and receive data
-// import	Used for capturing a screenshot for any of the active pages we have and it gives the output as an image file
-// info	Reads documentation in the info format. It will give detailed information for a command when compared with the main page
-// insmod	Used to insert modules into the kernel
-// install	Used to copy files and set attributes
-// iostat	Used for monitoring system input/output statistics for devices and partitions
-// iotop	Used to display and monitor the disk IO usage details and even gets a table of existing IO utilization by the process
-// ip	Used for performing several network administration tasks
-// ipcrm	Used to remove some IPC(Inter-Process Communication) resources. It eliminates the IPC objects and their associated data structure form the system
-// ipcs	Shows information on the inter-process communication facilities for which the calling process has read access
-// iptables	Used to set up and maintain tables for the Netfilter firewall for IPv4, included in the Linux kernel
-// iptables-save	It will save the current iptables rules in a user specified file, that can be used later when the user wants
-// iwconfig	Used to display the parameters, and the wireless statistics which are extracted from /proc/net/wireless
-// join	It is a command line utility for joining lines of two files based on a key field present in both the files
-// journalctl	Used to view systemd, kernel and journal logs
-// kill	Used to terminate processes manually. kill command sends a signal to a process which terminates the process
-// last	Used to display the list of all the users logged in and out since the file /var/log/wtmp was created
-// less	Used to read contents of text file one page(one screen) per time
-// let	Used to evaluate arithmetic expressions on shell variables
-// ln	Used to create links between files
-// locate	Used to find the files by name
-// look	Shows the lines beginning with a given string
-// lsblk	Used to display details about block devices and these block devices(Except ram disk) are basically those files that represent devices connected to the pc.
-// lshw	Used to generate the detailed information of the system’s hardware configuration from various files in the /proc directory
-// lsmod	Used to display the status of modules in the Linux kernel. It results in a list of loaded modules
-// lsof	Provides a list of files that are opened
-// lsusb	Used to display the information about USB buses and the devices connected to them
-// mailq	This command in Linux prints the mail queue i.e the list of messages that are there in the mail queue
-// man	Used to display the user manual of any command that we can run on the terminal
-// md5sum	To verify data integrity using MD5 (Message Digest Algorithm 5)
-// mkdir	Allows the user to create directories. This command can create multiple directories at once
-// modinfo	Used to display the information about a Linux Kernel module
-// more	Used to view the text files in the command prompt, displaying one screen at a time in case the file is large (For example log files)
-// mount	Used to mount the filesystem found on a device to big tree structure(Linux filesystem) rooted at ‘/‘
-// mpstat	Used to report processor related statistics.
-// mv	Used to move one or more files or directories from one place to another in file system like UNIX
-// nc(netcat)	It is one of the powerful networking tool, security tool or network monitoring tool.
-// netstat	Displays various network related information such as network connections, routing tables, interface statistics, masquerade connections, multicast memberships, etc.
-// nmcli	Used for controlling NetworkManager. nmcli command can also be used to display network device status, create, edit, activate/deactivate, and delete network connections
-// nslookup	It is a network administration tool for querying the Domain Name System (DNS) to obtain domain name or IP address mapping or any other specific DNS record
-// od	Used to convert the content of input in different formats with octal format as the default format
-// passwd	Used to change the user account passwords
-// paste	Used to join files horizontally (parallel merging) by outputting lines consisting of lines from each file specified, separated by tab as delimiter, to the standard output
-// pidof	Used to find out the process IDs of a specific running program
-// ping	Used to check the network connectivity between host and server/host
-// pinky	It is a user information lookup command which gives details of all the users logged in. Unlike finger, in the pinky, you may trim the information of your interest.
-// pmap	Used to display the memory map of a process. A memory map indicates how memory is spread out
-// poweroff	Sends an ACPI signal which instructs the system to power down
-// printf	Used to display the given string, number or any other format specifier on the terminal window
-// ps	Used to list the currently running processes and their PIDs along with some other information depends on different options
-// pwd	It prints the path of the working directory, starting from the root
-// ranlib	Used to generate index to archive
-// rcp	Used to copy files from one computer to another computer
-// read	Reads up the total number of bytes from the specified file descriptor into the buffer
-// readelf	Used to get information of ELF(Executable and Linkable Format) Files
-// readlink	Used to print resolved symbolic links or canonical file names
-// reboot	Instructs the system to restart or reboot
-// rename	Used to rename the named files according to the regular expression perlexpr
-// reset	Used to initialize the terminal. This is useful once a program dies leaving a terminal in an abnormal state
-// restore	Used for restoring files from a backup created using dump
-// return	Used to exit from a shell function.
-// rev	Used to reverse the lines characterwise
-// rm	Used to remove objects such as files, directories, symbolic links and so on from the file system like UNIX
-// rmdir	Used to remove empty directories from the filesystem in Linux
-// rmmod	Used to remove a module from the kernel
-// route	Used when you want to work with the IP/kernel routing table
-// rsync	It is a software utility for Unix-Like systems that efficiently sync files and directories between two hosts or machines
-// sar	Used to monitor Linux system’s resources like CPU usage, Memory utilization, I/O devices consumption, etc.
-// scp	Used to copy file(s) between servers in a secure way.
-// screen	Provides the ability to launch and use multiple shell sessions from a single ssh session
-// script	Used to make typescript or record all the terminal activities
-// scriptreplay	Used to replay a typescript/terminal_activity stored in the log file that was recorded by the script command
-// sdiff	Used to compare two files and then writes the results to standard output in a side-by-side format
-// sed	Used for finding, filtering, text substitution, replacement and text manipulations like insertion, deletion search etc.
-// select	Used to create a numbered menu from which a user can select an option
-// seq	Used to generate numbers from FIRST to LAST in steps of INCREMENT
-// setsid	Used to run a program in a new session
-// shift	Shifts/moves the command line arguments to one position left.
-// showkey	prints to standard output either the scan codes or the key code or the `ascii’ code of each key pressed
-// shred	Used in order to delete a file completely from hard disk
-// shutdown	Used to shutdown the system in a safe way
-// sleep	Used to create a dummy job. A dummy job helps in delaying the execution
-// source	Used to read and execute the content of a file(generally set of commands), passed as an argument in the current shell script
-// sort	Used to sort a file, arranging the records in a particular order
-// split	Used to split large files into smaller files
-// ssh	Protocol used to securely connect to a remote server/system
-// strace	It is one of the most powerful process monitoring, diagnostic, instructional tool of Linux.
-// stty	Used to change and print terminal line settings
-// sudo	Used as a prefix of some command that only superuser are allowed to run
-// sum	Used to find checksum and count the blocks in a file
-// sync	Used to synchronize cached writes to persistent storage
-// systemctl	Used to examine and control the state of “systemd” system and service manager
-// tac	Used to concatenate and print files in reverse
-// tail	Prints the last N number of data of the given input
-// tar	Used to create Archive and extract the Archive files
-// tee	Reads the standard input and writes it to both the standard output and one or more files
-// time	Used to execute a command and prints a summary of real-time, user CPU time and system CPU time spent by executing a command when it terminates
-// top	Provides a dynamic real-time view of the running system
-// touch	Used to create, change and modify timestamps of a file
-// tr	It is a command line utility for translating or deleting characters
-// tracepath	Used to traces path to destination discovering MTU along this path
-// traceroute	Prints the route that a packet takes to reach the host
-// Tree	A recursive directory listing program that produces a depth-indented listing of files
-// tty	It displays the information related to terminal. It basically prints the file name of the terminal connected to standard input
-// type	Used to describe how its argument would be translated if used as commands
-// uname	Displays the information about the system
-// unexpand	Converts each spaces into tabs writing the produced output to the standard output
-// uniq	It is a command line utility that reports or filters out the repeated lines in a file
-// unix2dos	Converts a Unix text file to DOS format
-// until	Used to execute a set of commands as long as the final command in the ‘until’ Commands has an exit status which is not zero
-// Uptime	Used to find out how long the system is active (running)
-// useradd	Used to add user accounts to your system
-// usermod	Used to change the properties of a user in Linux through the command line
-// username	It provides a set of commands to fetch username and its configurations from the Linux host
-// users	Used to show the user names of users currently logged in to the current host
-// userdel	Used to delete a user account and related files
-// vi	It is the default editor that comes with the UNIX operating system is called visual editor.
-// vmstat	It is a performance monitoring command of the system as it gives the information about processes, memory, paging, block IO, disk and CPU scheduling
-// vnstat	Used by system administrators in order to monitor network parameters such as bandwidth consumption or maybe some traffic flowing in or out
-// w	Used to show who is logged on and what they are doing
-// wall	Displays a message, or the contents of a file, or otherwise its standard input, on the terminals of all currently logged in users
-// watch	Used to execute a program periodically, showing output in fullscreen
-// wc	Used to find out number of lines, word count, byte and characters count in the files specified in the file arguments
-// Wget	Used to download files from the server even when the user has not logged on to the system and it can work in background without hindering the current process
-// whatis	Used to get a one-line manual page descriptions
-// which	Used to locate the executable file associated with the given command by searching it in the path environment variable
-// while	Used to repeatedly execute a set of command as long as the COMMAND returns true
-// who	Used to get information about currently logged in user on to system
-// whoami	Displays the username of the current user when this command is invoked
-// write	Allows a user to communicate with other users, by copying lines from one user’s terminal to others
-// xargs	Used to build and execute commands from standard input. It converts input received from standard input into arguments of a command
-// xdg-open	Used to open a file or URL in the user’s preferred application
-// yes	Used to print a continuous output stream of given STRING. If STRING is not mentioned then it prints ‘y’
-// zdiff	Used to invoke the diff program on files compressed via gzip
-// zdump	Used to print the current time in the specified zone or you can say prints the current time in each zonename named on the command line
-// zgrep	Used to search out expressions from a given a file even if it is compressed
-// zip	It is a compression and file packaging utility for Unix. Each file is stored in single .zip {.zip-filename} file with the extension .zip
-
+let commandFunctions = generateCommandFunctions(commands);
+module.exports = commandFunctions;
+module.exports.default = commandFunctions;
