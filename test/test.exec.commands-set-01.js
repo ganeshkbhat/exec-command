@@ -306,4 +306,76 @@ describe('[commands usage tests] Tests to ', () => {
     expect(actual).to.equal(expected);
   });
 
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
+  it('should ', () => {
+    let actual = true;
+    let expected = true;
+    expect(actual).to.equal(expected);
+  });
+
 });
