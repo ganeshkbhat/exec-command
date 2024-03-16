@@ -17,60 +17,60 @@
 'use strict';
 
 const { execFile, exec, execFileSync, fork, spawn, spawnSync } = require('child_process');
+const util = require("util");
 
 /**
- * Function to execute exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
+ * @return {*} 
  */
-function executeFile(fileName, args, path) {
-  let promise = new Promise((resolve, reject) => {
-    execFile(fileName, args, { cwd: path }, (err, data) => {
-      if (err) reject(err);
-      else resolve(data);
-    });
-
-  });
-  return promise;
+async function executeFile(fileName, args, options) {
+  const exeFile = util.promisify(execFile);
+  const { error, stdout, stderr } = await exeFile(fileName, args, options || { cwd: process.cwd() });
+  // const { error, stdout, stderr } = await execFile('node', ['--version']);
+  return { error, stdout, stderr };
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
+ * @return {*} 
  */
-function executeFileSync(fileName, args, path) {
-  return execFileSync(fileName, args);
+function executeFileSync(fileName, args, options) {
+  return execFileSync(fileName, args, options || { cwd: process.cwd() });
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
+ * @return {*} 
  */
-function execute(fileName, args, path) {
-  let promise = new Promise((resolve, reject) => {
-    exec(fileName, args, { cwd: path }, (err, data) => {
-      if (err) reject(err);
-      else resolve(data);
-    });
-
-  });
-  return promise;
+async function execute(fileName, args, options) {
+  const exec = util.promisify(exec);
+  const { error, stdout, stderr } = await exec(fileName, args, options || { cwd: process.cwd() });
+  return { error, stdout, stderr };
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
+ * @return {*} 
  */
-function executeCommand(fileName, args, path) {
+function executeCommand(fileName, args, options) {
   let promise = new Promise((resolve, reject) => {
-    let ps = spawn(fileName, args, { cwd: path }, (err, data) => {
+    let ps = spawn(fileName, args, options || { cwd: process.cwd() }, (err, data) => {
       if (err) reject(err);
       else resolve(data);
     });
@@ -98,40 +98,227 @@ function executeCommand(fileName, args, path) {
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
+ * @return {*} 
  */
-function executeCommandSync(fileName, args, path) {
-  return spawnSync(fileName, args);
+function executeCommandSync(fileName, args, options) {
+  return spawnSync(fileName, args, options || { cwd: process.cwd() });
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
  */
-function executeFork(fileName, args, path) {
-  let child = fork(fileName, args, options);
+function executeFork(fileName, args, options) {
+  let child = fork(fileName, args, options || { cwd: process.cwd() });
   child.on('error', (err) => {
     // This will be called with err being an AbortError if the controller aborts
   });
 }
 
 /**
- * Function to  exe
- * @param {string} fileName The name of the executable file to run.
- * @param {string[]} args List of string arguments.
- * @param {string} path Current working directory of the child process.
+ *
+ *
+ * @param {*} fileName
+ * @param {*} args
+ * @param {*} options
  */
-function executeFork(fileName, args, path) {
-  let child = exec(fileName, args, options);
+function executeFork(fileName, args, options) {
+  let child = exec(fileName, args, options || { cwd: process.cwd() }, () => {
+
+  });
   child.on('error', (err) => {
     // This will be called with err being an AbortError if the controller aborts
   });
 }
+
+[
+  "access", "accton", "aclocal", "acpi", "acpi_available",
+  "acpid", "addr2line", "agetty", "alias", "amixer", "aplay",
+  "aplaymidi", "apropos", "apt", "apt-get", "aptitude", "ar",
+  "arch", "arp", "aspell", "atd", "atrm", "atq", "autoconf",
+  "autoheader", "automake", "autoreconf", "autoupdate", "awk",
+  "banner", "basename", "batch", "bc", "bg", "biff", "bind",
+  "bison", "break", "builtin", "bzcmp", "bzdiff", "bzgrep",
+  "bzip2", "bzless", "cal", "case", "cat", "cc", "ccrypt",
+  "cd", "cfdisk", "chage", "chattr", "chfn", "chgrp", "chkconfig",
+  "chmod", "chown", "chpasswd", "chroot", "chrt", "chsh", "chvt",
+  "cksum", "clear", "cmp", "col", "colcrt", "colrm", "column",
+  "comm", "compress", "continue", "cp", "cpio", "cpp", "cron",
+  "crontab", "csplit", "ctags", "cupsd", "curl", "cut", "cvs",
+  "date", "dc", "dd", "declare", "depmod", "df", "diff", "diff3",
+  "dir", "dirname", "dirs", "disable", "dmesg", "dmesg", "dmidecode",
+  "domainname", "dos2unix", "dosfsck", "dstat", "du", "dump",
+  "dumpe2fs", "dumpkeys", "echo", "ed", "egrep", "eject", "emacs",
+  "enable", "env", "eval", "ex", "exec", "exit", "expand", "expect",
+  "export", "expr", "factor", "fc", "fc-cache", "fc-list", "fdisk",
+  "fg", "fgrep", "file", "find", "finger", "fmt", "fold", "for",
+  "free", "Fun", "function", "g++", "gawk", "gcc", "gdb", "getent",
+  "gpasswd", "grep", "groupadd", "groupdel", "groupmod", "groups",
+  "grpconv", "gs", "tar", "xz", "gz", "gunzip", "gzexe", "gzip", 
+  "halt", "hash", "hdparm", "help", "hexdump", "history", 
+  "host", "hostid", "hostname", "hostnamectl", "htop", 
+  "hwclock", "iconv", "id", "if", "iftop", "ifup", 
+  "import", "info", "insmod", "install", "iostat", "iotop", "ip", 
+  "ipcrm", "ipcs", "iptables", "iptables-save", "iwconfig", 
+  "join", "journalctl", "kill", "last", "less", "let", "ln", "locate", 
+  "look", "lsblk", "lshw", "lsmod", "lsof", "lsusb", "mailq", "man",
+  "md5sum", "mkdir", "modinfo", "more", "mount", "mpstat", "mv", "nc",
+  "netstat", "nmcli", "nslookup", "od", "passwd", "paste", "pidof",
+  "ping", "pinky", "pmap", "poweroff", "printf", "ps", "pwd", "ranlib",
+  "rcp", "read", "read", "readelf", "readlink", "reboot", "rename",
+  "reset", "restore", "return", "rev", "rm", "rmdir", "rmmod",
+  "route", "rsync", "sar", "scp", "screen", "script", "scriptreplay",
+  "sdiff", "sed", "select", "seq", "setsid", "shift", "showkey",
+  "shred", "shutdown", "sleep", "source", "sort", "split", "ssh",
+  "strace", "stty", "sudo", "sum", "sync", "systemctl", "tac",
+  "tail", "tee", "time", "top", "touch", "tr", "tracepath",
+  "traceroute", "tree", "tty", "type", "uname", "unexpand", "uniq",
+  "unix2dos", "until", "uptime", "useradd", "usermod", "username",
+  "users", "userdel", "vi", "vmstat", "vnstat", "w", "wall", "watch",
+  "wc", "wget", "whatis", "which", "while", "who", "whoami", "write",
+  "xargs", "xdg-open", "yes", "zdiff", "zdump", "zgrep", "zip", "ls",
+  "find", "kill", "ifconfig", "curl", "diff",
+  "head", "tail", "sort", "sed", "cut", "echo", "tr", "export", "set",
+  "source", "apropos", "info", "alias", "df", "du", 
+  "cat", "ln", "whereis", "su", "hd", "at", "apt-get", "yumrm", "yum",
+  "cc", "make", "nohup", "jobs", "wait", "atop", "pgrep", 
+  "/etc/inittab", "init"
+]
+
+
+// tar Command to Compress Files in Linux
+// Zip Command to Compress Files in Linux
+// Gzip Command to Compress Files in Linux
+// Bzip2 Command to Compress Files in Linux
+// XZ Command to Compress Files in Linux
+// gz
+// ps Command to List Running Processes in Linux
+// top Command to List Running Processes in Linux
+// htop Command to List Running Processes in Linux
+// atop Command to List Running Processes in Linux
+// pgrep Command to Find Process IDs in Linux
+// chmod https://www.geeksforgeeks.org/chmod-command-linux/?ref=lbp
+// chmod change ownership https://www.geeksforgeeks.org/chown-command-in-linux-with-examples/?ref=lbp
+// chgrp change group ownership https://www.geeksforgeeks.org/chgrp-command-in-linux-with-examples/?ref=lbp
+// /etc/inittab Specifies the init command control file.
+// init [OPTIONS...] {COMMAND}
+// ls
+// find
+// kill
+// ifconfig
+// ping
+// ssh
+// scp
+// wget
+// curl
+// diff
+// head
+// tail
+// SORT
+// sed
+// cut
+// echo
+// tr
+// export
+// set
+// source
+// history
+// apropos
+// info
+// alias
+// uname
+// df
+// du
+// cat
+// ln
+// which
+// whereis
+// locate
+// date
+// cal
+// systemctl
+// shutdown
+// useradd
+// usermod
+// userdel
+// groupadd
+// groupmod
+// groupdel
+// passwd
+// pwd
+// mkdir
+// su
+// sudo
+// chroot
+// file
+// hd
+// wc
+// tee
+// script
+// ssh
+// crontab
+// at
+// apt-get
+// yumrm
+// cp
+// mv
+// touch
+// cat
+// cc
+// ccrypt
+// mkdir
+// rm
+// cp
+// bind
+// atrm
+// uname
+// df
+// du
+// screen
+// rsync
+// uniq
+// arch
+// arp
+// aspell
+// atd
+// atrm
+// atq
+// autoconf
+// autoheader
+// automake
+// make
+// basename
+// batch
+// bc
+// bg
+// biff
+// bind
+// bison
+// break
+// builtin
+// bzcmp
+// bzdiff
+// bzgrep
+// bzip2
+// banner
+// nohup
+// bg
+// fg
+// jobs
+// wait
+// rsync
+// screen
+// uniq
+
+
 
 
 // access	Used to check whether the calling program has access to a specified file. It can be used to check whether a file exists or not
@@ -400,7 +587,7 @@ function executeFork(fileName, args, path) {
 // sync	Used to synchronize cached writes to persistent storage
 // systemctl	Used to examine and control the state of “systemd” system and service manager
 // tac	Used to concatenate and print files in reverse
-// Tail	Prints the last N number of data of the given input
+// tail	Prints the last N number of data of the given input
 // tar	Used to create Archive and extract the Archive files
 // tee	Reads the standard input and writes it to both the standard output and one or more files
 // time	Used to execute a command and prints a summary of real-time, user CPU time and system CPU time spent by executing a command when it terminates
@@ -445,128 +632,3 @@ function executeFork(fileName, args, path) {
 // zgrep	Used to search out expressions from a given a file even if it is compressed
 // zip	It is a compression and file packaging utility for Unix. Each file is stored in single .zip {.zip-filename} file with the extension .zip
 
-// ls
-// find
-// tar Command to Compress Files in Linux
-// Zip Command to Compress Files in Linux
-// Gzip Command to Compress Files in Linux
-// Bzip2 Command to Compress Files in Linux
-// XZ Command to Compress Files in Linux
-// gz
-// ps Command to List Running Processes in Linux
-// top Command to List Running Processes in Linux
-// htop Command to List Running Processes in Linux
-// atop Command to List Running Processes in Linux
-// pgrep Command to Find Process IDs in Linux
-// chmod https://www.geeksforgeeks.org/chmod-command-linux/?ref=lbp
-// chmod change ownership https://www.geeksforgeeks.org/chown-command-in-linux-with-examples/?ref=lbp
-// chgrp change group ownership https://www.geeksforgeeks.org/chgrp-command-in-linux-with-examples/?ref=lbp
-// kill
-// ifconfig
-// ping
-// ssh
-// scp
-// wget
-// curl
-// diff
-// head
-// tail
-// SORT
-// sed
-// cut
-// echo
-// tr
-// export
-// set
-// source
-// history
-// apropos
-// info
-// alias
-// uname
-// df
-// du
-// cat
-// ln
-// which
-// whereis
-// locate
-// date
-// cal
-// systemctl
-// shutdown
-// /etc/inittab Specifies the init command control file.
-// init [OPTIONS...] {COMMAND}
-// useradd
-// usermod
-// userdel
-// groupadd
-// groupmod
-// groupdel
-// passwd
-// pwd
-// mkdir
-//
-// su
-// sudo
-// chroot
-// file
-// hd
-// wc
-// tee
-// script
-// ssh
-// crontab
-// at
-// apt-get
-// yumrm
-// cp
-// mv
-// touch
-// cat
-// cc
-// ccrypt
-// mkdir
-// rm
-// cp
-// bind
-// atrm
-// uname
-// df
-// du
-// screen
-// rsync
-// uniq
-//
-// arch
-// arp
-// aspell
-// atd
-// atrm
-// atq
-// autoconf
-// autoheader
-// automake
-// make
-// basename
-// batch
-// bc
-// bg
-// biff
-// bind
-// bison
-// break
-// builtin
-// bzcmp
-// bzdiff
-// bzgrep
-// bzip2
-// banner
-// nohup
-// bg
-// fg
-// jobs
-// wait
-// rsync
-// screen
-// uniq
