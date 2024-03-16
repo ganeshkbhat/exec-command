@@ -191,19 +191,11 @@ let commands = [
   "jobs", "wait", "atop", "pgrep", "/etc/inittab", "init"
 ]
 
-let pt = process.cwd();
-
-// let fileName = "ls", args = ["-a"], options = {};
-// let ls = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`)
-// let sl = ((fileName, args, options) => {
-//   ls(fileName, args, options, spawnSync)
-// })
-// sl(fileName, args, options)
-// console.log(ls(fileName, args, options, spawnSync).stdout.toString());
-
 function generateCommandFunctions(commands) {
   let l = commands.length;
   let cmds = {};
+  let pt = process.cwd();
+
   for (let i = 0; i < l; i++) {
     let fileName = commands[i], options = {};
     let cmd = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`);
@@ -212,7 +204,7 @@ function generateCommandFunctions(commands) {
   return cmds;
 }
 
-
 let commandFunctions = generateCommandFunctions(commands);
+
 module.exports = commandFunctions;
 module.exports.default = commandFunctions;
