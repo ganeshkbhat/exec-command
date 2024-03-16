@@ -2,6 +2,7 @@
 
 const { execFile, exec, execFileSync, fork, spawn, spawnSync } = require('child_process');
 
+let pt = process.cwd();
 let fileName = "ls", args = ["-a"], options = {};
 let ls = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`)
 let sl = ((fileName, args, options) => {
