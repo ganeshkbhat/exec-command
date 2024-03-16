@@ -192,10 +192,7 @@ let commands = [
 ]
 
 function generateCommandFunctions(commands) {
-  let l = commands.length;
-  let cmds = {};
-  let pt = process.cwd();
-
+  let l = commands.length, cmds = {}, pt = process.cwd();
   for (let i = 0; i < l; i++) {
     let fileName = commands[i], options = {};
     let cmd = new Function('fileName', 'args', 'options', 'spawnSync', `return spawnSync(fileName, args, options || { cwd: "' + ${pt} + '" });`);
